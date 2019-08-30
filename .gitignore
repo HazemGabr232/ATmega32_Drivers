@@ -54,4 +54,7 @@ dkms.conf
 #build and binaries 
 */Debug/
 RemoteSystemsTempFiles/
+.cproject
+.project
+.settings/
 
