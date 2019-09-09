@@ -127,6 +127,7 @@ extern void LCD_vidShiftDisplay(u8 direction,u8 shift_num)
 
 		LOC_vidSendInstruction(DISPLAY_SHIFT|(direction<<2));
 	}
+	_delay_ms(2);
 
 }
 
@@ -138,6 +139,7 @@ extern void LCD_vidShiftCursor(u8 direction,u8 shift_num)
 
 		LOC_vidSendInstruction(CURSOR_SHIFT|((direction)<<2));
 	}
+	_delay_ms(2);
 
 }
 
@@ -173,5 +175,6 @@ extern void LCD_vidCreatCustomPattern(u8 *pattern, u8 position){
 		LCD_vidWriteChar(pattern[i]);
 
 	LOC_vidSendInstruction(DDRAM_ADDRESS);
+	_delay_ms(2);
 
 }
