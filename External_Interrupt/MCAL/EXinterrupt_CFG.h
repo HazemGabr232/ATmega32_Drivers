@@ -8,7 +8,7 @@
 #ifndef MCAL_EXINTERRUPT_CFG_H_
 #define MCAL_EXINTERRUPT_CFG_H_
 
-#define SREG	 		*((volatile u8*)0x5F)
+//#define SREG	 		*((volatile u8*)0x5F)
 #define MCUCR 			*((volatile u8*)0x55)
 #define GICR 			*((volatile u8*)0x5B)
 #define GIFR			*((volatile u8*)0x5A)

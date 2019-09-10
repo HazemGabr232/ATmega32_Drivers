@@ -40,6 +40,7 @@
 
 void ExInterrupt_vidEnable(u8 interrupt_number, u8 mode);
 void ExInterrupt_vidDisable(u8 interrupt_number);
+void ExInterrupt_setCallBackFun(u8 interrupt_number, void (*ptr)(void) );
 
 
 #endif /* MCAL_EXINTERRUPT_H_ */
