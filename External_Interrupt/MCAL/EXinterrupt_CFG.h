@@ -17,4 +17,8 @@
 //#define INT1_VECTOR 	*((volatile u8*)0x04)
 //#define INT2_VECTOR 	*((volatile u8*)0x06)
 
+#define VECT_INT0 	1
+#define VECT_INT1 	2
+#define VECT_INT2 	3
+
 #endif /* MCAL_EXINTERRUPT_CFG_H_ */

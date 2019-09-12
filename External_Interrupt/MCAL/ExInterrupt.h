@@ -30,10 +30,6 @@
 #define INT1		1
 #define INT2		2
 
-#define VECT_INT0 	1
-#define VECT_INT1 	2
-#define VECT_INT2 	3
-
 
 #define GLOBAL_INTERRUPT_ENABLE()   (SET_BIT(SREG,7))
 #define GLOBAL_INTERRUPT_DISABLE()  (CLEAR_BIT(SREG,7))
