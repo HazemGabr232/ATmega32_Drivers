@@ -62,10 +62,10 @@ void Timer_vidEnableTimer(u8 timer_no, u8 prescaler, u8 mode){
 		case COMPAREA:
 			SET_BIT(TIMSK, 4);
 			OCR1A = 31250; //TODO take the value from the user
-			CLEAR_BIT(TCCR1A, 0);
-			CLEAR_BIT(TCCR1A, 1);
-			SET_BIT(TCCR1B, 3);
-			CLEAR_BIT(TCCR1B, 4);
+			CLEAR_BIT(TCCR1A, 0);  //WGM10
+			CLEAR_BIT(TCCR1A, 1);	//WGM11
+			SET_BIT(TCCR1B, 3);		//WGM12
+			CLEAR_BIT(TCCR1B, 4);	//WGM13
 			break;
 		case COMPAREB:
 			SET_BIT(TIMSK, 3);
@@ -73,9 +73,28 @@ void Timer_vidEnableTimer(u8 timer_no, u8 prescaler, u8 mode){
 		case CAPTURE:
 			SET_BIT(TIMSK, 5);
 			break;
+		case FAST_PWM: 		//MODE 14 FAST PWM
+			//ICR1 = 20000			//TOP VALUE
+			//OCR1A =1000			//ON
+			CLEAR_BIT(TCCR1A, 6);
+			SET_BIT(TCCR1A, 7);
+			CLEAR_BIT(TCCR1A, 0);
+			SET_BIT(TCCR1A, 1);
+			SET_BIT(TCCR1B, 3);
+			SET_BIT(TCCR1B, 4);
 		}
 
 		switch(prescaler){
+				case SCALER1:
+					SET_BIT(TCCR1B, 0);
+					CLEAR_BIT(TCCR1B, 1);
+					CLEAR_BIT(TCCR1B, 2);
+					break;
+				case SCALER8:
+					CLEAR_BIT(TCCR1B, 0);
+					SET_BIT(TCCR1B, 1);
+					CLEAR_BIT(TCCR1B, 2);
+					break;
 				case SCALER64:
 					SET_BIT(TCCR1B, 0);
 					SET_BIT(TCCR1B, 1);
@@ -165,6 +184,43 @@ void Timer_setCallBackFun(u8 timer_no,u8 mode , void (*ptr)(void) ){
 				}
 				break;
 		}
+}
+
+void Timer_vidSetPWM(u16 freq, u16 on_time){
+//TODO map values here using equations
+	ICR1 = freq ;
+	OCR1A = on_time ;
+}
+
+u16 Timer_u8GetTimerCounts(u8 timer_no){
+	switch(timer_no){
+	case TIMER0:
+		return TCNT0;
+		break;
+	case TIMER1:
+		return TCNT1;
+		break;
+	case TIMER2:
+		return TCNT2;
+		break;
+	}
+	return 0;
+
+}
+
+void Timer_vidSetTimerStartValue(u8 timer_no, u16 start_value){
+	switch(timer_no){
+	case TIMER0:
+		TCNT0 = (u8)start_value;
+		break;
+	case TIMER1:
+		TCNT1 = start_value;
+		break;
+	case TIMER2:
+		TCNT2 = (u8)start_value;
+		break;
+	}
+
 }
 
 ISR(VECT_TIMER0_COMP){

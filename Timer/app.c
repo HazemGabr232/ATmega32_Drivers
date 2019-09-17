@@ -4,25 +4,26 @@
  *  Created on: Sep 7, 2019
  *      Author: Hazem
  */
+#define F_CPU 8000000UL
 
 #include "STD_Types.h"
 #include "macros.h"
 #include "MCAL/Timer.h"
 #include "MCAL/DIO.h"
+#include <util/delay.h>
 
-u8 flag =0 ;
-
-void callbackfun(void){
-	DIO_vidSetPinValue(APORT, PIN0, flag);
-	flag ^= 1;
-}
-
+u16 pos =800;
 int main(void){
-	DIO_vidSetPinDirection(APORT, PIN0, OUTPUT);
-	Timer_vidEnableTimer(TIMER1, SCALER256, COMPAREA);
-	Timer_setCallBackFun(TIMER1, COMPAREA, callbackfun);
+	Timer_vidEnableTimer(TIMER1, SCALER8, FAST_PWM);
+	Timer_vidSetPWM(20000, pos);
+	DIO_vidSetPinDirection(DPORT, PIN5, OUTPUT);
 	while(1){
-
+		Timer_vidSetPWM(20000, pos+=5);
+		if (pos >=2300){
+			pos=1000;
+			_delay_ms(500);
+		}
+		_delay_ms(50);
 	}
 	return 0;
 }
